@@ -48,18 +48,8 @@ class HashMap {
     // Takes a key as an argument and returns true or false based on
     // whether or not the key is in the hash map.
     has(key) {
+        const hashCode = hash(key);
 
-    }
-
-    // Takes a key as an argument. If the given key is in the hash map,
-    // it should remove the entry with that key and return true. If the
-    // key isn’t in the hash map, it should return false.
-    remove(key) {
-
-    }
-
-    // Returns the number of stored keys in the hash map.
-    length() {
-
+        return this._buckets[hashCode].contains(key);
     }
 }
