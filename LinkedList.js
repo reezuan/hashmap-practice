@@ -7,18 +7,17 @@ class LinkedList {
         this.listTail = null;
     }
 
-    // Add a new node to the head of the list.
-    prepend(value) {
+    // Adds a new node to the head of the list.
+    prepend(key, value, hashCode) {
         if (this.listHead === null) {
-            this.listHead = new Node(value);
+            this.listHead = new Node(key, value, hashCode, null);
             this.listTail = this.listHead;
             return;
         } 
         
         // Set the new list head & make it point to the previous head.
         let previousHead = this.listHead;
-        this.listHead = new Node(value);
-        this.listHead.next = previousHead;
+        this.listHead = new Node(key, value, hashCode, previousHead);
 
         // Set the new list tail.
         let currentNode = this.listHead;
@@ -30,7 +29,7 @@ class LinkedList {
         this.listTail = currentNode;
     }
 
-    // Return the total number of nodes in the list.
+    // Returns the total number of nodes in the list.
     size() {
         let counter = 0;
         let currentNode = this.listHead;
@@ -43,12 +42,12 @@ class LinkedList {
         return counter;
     }
 
-    // Returns true if the value is in the list, otherwise returns false.
-    contains(value) {
+    // Returns true if the key is in the list, otherwise returns false.
+    contains(key) {
         let currentNode = this.listHead;
 
         while (currentNode !== null) {
-            if (currentNode.value === value) {
+            if (currentNode.key === key) {
                 return true;
             }
             
@@ -58,15 +57,15 @@ class LinkedList {
         return false;
     }
 
-    // Returns the index of the node containing the value, or null if
+    // Returns the index of the node containing the key, or null if
     // not found.
-    find(value) {
+    find(key) {
         let currentNode = this.listHead;
         let currentIndex = 0;
 
         // Return true if a match is found.
         while (currentNode !== null) {
-            if (currentNode.value === value) {
+            if (currentNode.key === key) {
                 return currentIndex;
             }
             
@@ -76,6 +75,21 @@ class LinkedList {
 
         // Return null if the value isn't found.
         return null;
+    }
+
+    // Updates the value of a node containing the key.
+    update(key, value) {
+        let currentNode = this.listHead;
+
+        while (currentNode.key !== key && currentNode !== null) {
+            currentNode = currentNode.next;
+        }
+
+        if (currentNode === null) {
+            return;
+        } else {
+            currentNode.value = value;
+        }
     }
 }
 
