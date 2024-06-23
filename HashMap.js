@@ -66,4 +66,15 @@ class HashMap {
             return true;
         }
     }
+
+    // Returns the number of stored keys in the hash map.
+    length() {
+        let totalKeys = 0;
+
+        this._buckets.forEach(bucket => {
+            totalKeys += bucket.size();
+        });
+
+        return totalKeys;
+    }
 }
