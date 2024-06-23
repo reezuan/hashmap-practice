@@ -112,4 +112,19 @@ class HashMap {
 
         return values;
     }
+
+    // Returns an array that contains each key-value pair.
+    // Example: [[firstKey, firstValue], [secondKey, secondValue]]
+    entries() {
+        let pairs = [];
+
+        this._buckets.forEach(bucket => {
+            let nodes = bucket.getNodes();
+            nodes.forEach(node => {
+                pairs.push([node.key, node.value]);
+            });
+        });
+
+        return pairs;
+    }
 }
