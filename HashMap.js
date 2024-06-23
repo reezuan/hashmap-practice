@@ -98,4 +98,18 @@ class HashMap {
 
         return keys;
     }
+
+    // Returns an array containing all the values.
+    values() {
+        let values = [];
+
+        this._buckets.forEach(bucket => {
+            let nodes = bucket.getNodes();
+            nodes.forEach(node => {
+                values.push(node.value);
+            });
+        });
+
+        return values;
+    }
 }
