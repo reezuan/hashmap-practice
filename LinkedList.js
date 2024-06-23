@@ -91,6 +91,22 @@ class LinkedList {
             currentNode.value = value;
         }
     }
+
+    // Returns the value of the node containing the key, or null if the
+    // key isn't found.
+    valueOf(key) {
+        let currentNode = this.listHead;
+
+        while (currentNode.key !== key && currentNode !== null) {
+            currentNode = currentNode.next;
+        }
+
+        if (currentNode === null) {
+            return null;
+        } else {
+            return currentNode.value;
+        }
+    }
 }
 
 export { LinkedList };

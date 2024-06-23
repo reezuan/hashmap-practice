@@ -32,4 +32,34 @@ class HashMap {
             this._buckets[hashCode].update(key, value);
         }
     }
+
+    // Takes a key and returns the value that is assigned to this key.
+    // If a key is not found, return null.
+    get(key) {
+        const hashCode = hash(key);
+
+        if (this._buckets[hashCode].contains(key)) {
+            return this._buckets[hashCode].valueOf(key);
+        } else {
+            return null;
+        }
+    }
+
+    // Takes a key as an argument and returns true or false based on
+    // whether or not the key is in the hash map.
+    has(key) {
+
+    }
+
+    // Takes a key as an argument. If the given key is in the hash map,
+    // it should remove the entry with that key and return true. If the
+    // key isn’t in the hash map, it should return false.
+    remove(key) {
+
+    }
+
+    // Returns the number of stored keys in the hash map.
+    length() {
+
+    }
 }
