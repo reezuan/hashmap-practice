@@ -77,4 +77,11 @@ class HashMap {
 
         return totalKeys;
     }
+
+    // Removes all entries in the hash map.
+    clear() {
+        this._buckets.forEach(bucket => {
+            bucket.clear();
+        });
+    }
 }

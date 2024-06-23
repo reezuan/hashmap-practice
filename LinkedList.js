@@ -133,6 +133,12 @@ class LinkedList {
             previousNode.next = currentNode.next;
         }
     }
+
+    // Clear all nodes from the list.
+    clear() {
+        this.listHead = null;
+        this.listTail = null;
+    }
 }
 
 export { LinkedList };
