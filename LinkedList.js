@@ -139,6 +139,18 @@ class LinkedList {
         this.listHead = null;
         this.listTail = null;
     }
+
+    // Returns an array of all the nodes in the list.
+    getNodes() {
+        let currentNode = this.listHead;
+        let nodes = [];
+
+        while (currentNode !== null) {
+            nodes.push(currentNode);
+        }
+
+        return nodes;
+    }
 }
 
 export { LinkedList };
