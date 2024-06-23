@@ -84,4 +84,18 @@ class HashMap {
             bucket.clear();
         });
     }
+
+    // Returns an array containing all the keys inside the hash map.
+    keys() {
+        let keys = [];
+
+        this._buckets.forEach(bucket => {
+            let nodes = bucket.getNodes();
+            nodes.forEach(node => {
+                keys.push(node.key);
+            });
+        });
+
+        return keys;
+    }
 }
