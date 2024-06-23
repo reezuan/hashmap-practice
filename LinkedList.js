@@ -107,6 +107,32 @@ class LinkedList {
             return currentNode.value;
         }
     }
+
+    // Remove the node that contains the key from the list.
+    remove(key) {
+        let currentNode = this.listHead;
+        let previousNode = null;
+
+        while (currentNode.key !== key && currentNode !== null) {
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+        }
+
+        // If the key isn't found, exit the function.
+        if (currentNode === null) {
+            return;
+        }
+
+        // If the key is found, check if it's the first value in the
+        // list. If true, set the head & tail of the list to null. If
+        // false, set the previous node to point to the next node.
+        if (previousNode === null) {
+            this.listHead = null;
+            this.listTail = null;
+        } else {
+            previousNode.next = currentNode.next;
+        }
+    }
 }
 
 export { LinkedList };
