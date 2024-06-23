@@ -147,6 +147,7 @@ class LinkedList {
 
         while (currentNode !== null) {
             nodes.push(currentNode);
+            currentNode = currentNode.next;
         }
 
         return nodes;
