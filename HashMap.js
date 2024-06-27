@@ -15,7 +15,7 @@ class HashMap {
         
         this._buckets = Array.from({length: previousCapacity * 2}, () => new LinkedList());
 
-        for (let i = 0; i < previousBuckets.length; i++) {
+        for (let i = 0; i < previousCapacity; i++) {
             this._buckets[i] = previousBuckets[i];
         }
     }
@@ -36,6 +36,10 @@ class HashMap {
     // Takes a key and a value that is assigned to this key. If a key
     // already exists, then the old value is overwritten.
     set(key, value) {
+        if (this.size === this._maxBuckets || this.size > this._maxBuckets) {
+            this.#growBuckets();
+        }
+
         const hashCode = this.hash(key);
 
         if (this._buckets[hashCode].size() === 0 || !this._buckets[hashCode].contains(key)) {
