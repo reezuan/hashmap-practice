@@ -2,17 +2,29 @@ import { LinkedList } from "./LinkedList.js";
 
 class HashMap {
 
-    constructor(capacity) {
+    constructor(capacity, loadFactor) {
         this._buckets = Array.from({length: capacity}, () => new LinkedList());
-        this._loadFactor = 0.75;
-        this._maxBuckets = capacity * this._loadFactor;
+        this._loadFactor = loadFactor;
+        this._maxBuckets = Math.floor(capacity * loadFactor);
+        this.size = 0;
+    }
+
+    #growBuckets() {
+        let previousBuckets = this._buckets;
+        let previousCapacity = this._buckets.length;
+        
+        this._buckets = Array.from({length: previousCapacity * 2}, () => new LinkedList());
+
+        for (let i = 0; i < previousBuckets.length; i++) {
+            this._buckets[i] = previousBuckets[i];
+        }
     }
     
     // Takes a key and produces a hash code with it.
     hash(key) {
         let hashCode = 0;
-                
         const primeNumber = 31;
+
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
             hashCode = hashCode % this._buckets.length;
@@ -24,7 +36,7 @@ class HashMap {
     // Takes a key and a value that is assigned to this key. If a key
     // already exists, then the old value is overwritten.
     set(key, value) {
-        const hashCode = hash(key);
+        const hashCode = this.hash(key);
 
         if (this._buckets[hashCode].size() === 0 || !this._buckets[hashCode].contains(key)) {
             this._buckets[hashCode].prepend(key, value, hashCode);
@@ -36,7 +48,7 @@ class HashMap {
     // Takes a key and returns the value that is assigned to this key.
     // If a key is not found, return null.
     get(key) {
-        const hashCode = hash(key);
+        const hashCode = this.hash(key);
 
         if (this._buckets[hashCode].contains(key)) {
             return this._buckets[hashCode].valueOf(key);
@@ -48,7 +60,7 @@ class HashMap {
     // Takes a key as an argument and returns true or false based on
     // whether or not the key is in the hash map.
     has(key) {
-        const hashCode = hash(key);
+        const hashCode = this.hash(key);
 
         return this._buckets[hashCode].contains(key);
     }
@@ -57,7 +69,7 @@ class HashMap {
     // it should remove the entry with that key and return true. If the
     // key isn’t in the hash map, it should return false.
     remove(key) {
-        const hashCode = hash(key);
+        const hashCode = this.hash(key);
 
         if (!this._buckets[hashCode].contains(key)) {
             return false;
@@ -128,3 +140,5 @@ class HashMap {
         return pairs;
     }
 }
+
+export { HashMap }
