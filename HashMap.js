@@ -15,9 +15,13 @@ class HashMap {
         
         this._buckets = Array.from({length: previousCapacity * 2}, () => new LinkedList());
 
-        for (let i = 0; i < previousCapacity; i++) {
-            this._buckets[i] = previousBuckets[i];
-        }
+        previousBuckets.forEach(bucket => {
+            let allNodes = bucket.getNodes();
+
+            allNodes.forEach(node => {
+                this.set(node.key, node.value);
+            });
+        });
     }
     
     // Takes a key and produces a hash code with it.
@@ -47,6 +51,8 @@ class HashMap {
         } else if (this._buckets[hashCode].contains(key)) {
             this._buckets[hashCode].update(key, value);
         }
+
+        this.size += 1;
     }
 
     // Takes a key and returns the value that is assigned to this key.
