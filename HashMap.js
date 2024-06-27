@@ -12,8 +12,10 @@ class HashMap {
     #growBuckets() {
         let previousBuckets = this._buckets;
         let previousCapacity = this._buckets.length;
+        let newCapacity = previousCapacity * 2;
         
-        this._buckets = Array.from({length: previousCapacity * 2}, () => new LinkedList());
+        this._buckets = Array.from({length: newCapacity}, () => new LinkedList());
+        this._maxBuckets = Math.floor(newCapacity * this._loadFactor);
 
         previousBuckets.forEach(bucket => {
             let allNodes = bucket.getNodes();
@@ -48,11 +50,10 @@ class HashMap {
 
         if (this._buckets[hashCode].size() === 0 || !this._buckets[hashCode].contains(key)) {
             this._buckets[hashCode].prepend(key, value, hashCode);
+            this.size += 1;
         } else if (this._buckets[hashCode].contains(key)) {
             this._buckets[hashCode].update(key, value);
         }
-
-        this.size += 1;
     }
 
     // Takes a key and returns the value that is assigned to this key.
@@ -85,6 +86,7 @@ class HashMap {
             return false;
         } else {
             this._buckets[hashCode].remove(key);
+            this.size -= 1;
             return true;
         }
     }
