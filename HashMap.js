@@ -16,6 +16,7 @@ class HashMap {
         
         this._buckets = Array.from({length: newCapacity}, () => new LinkedList());
         this._maxBuckets = Math.floor(newCapacity * this._loadFactor);
+        this.size = 0;
 
         previousBuckets.forEach(bucket => {
             let allNodes = bucket.getNodes();
@@ -42,10 +43,6 @@ class HashMap {
     // Takes a key and a value that is assigned to this key. If a key
     // already exists, then the old value is overwritten.
     set(key, value) {
-        if (this.size === this._maxBuckets || this.size > this._maxBuckets) {
-            this.#growBuckets();
-        }
-
         const hashCode = this.hash(key);
 
         if (this._buckets[hashCode].size() === 0 || !this._buckets[hashCode].contains(key)) {
@@ -53,6 +50,10 @@ class HashMap {
             this.size += 1;
         } else if (this._buckets[hashCode].contains(key)) {
             this._buckets[hashCode].update(key, value);
+        }
+
+        if (this.size > this._maxBuckets) {
+            this.#growBuckets();
         }
     }
 
@@ -93,13 +94,7 @@ class HashMap {
 
     // Returns the number of stored keys in the hash map.
     length() {
-        let totalKeys = 0;
-
-        this._buckets.forEach(bucket => {
-            totalKeys += bucket.size();
-        });
-
-        return totalKeys;
+        return this.size;
     }
 
     // Removes all entries in the hash map.
@@ -107,6 +102,8 @@ class HashMap {
         this._buckets.forEach(bucket => {
             bucket.clear();
         });
+
+        this.size = 0;
     }
 
     // Returns an array containing all the keys inside the hash map.
